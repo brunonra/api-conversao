@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-conversao
+spec:
+  selector:
+    matchLabels:
+      app: api-conversao
+  template:
+    metadata:
+      labels:
+        app: api-conversao
+    spec:
+      containers:
+        - name: conversor
+          image: tiobaca/api-conversao:v1
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-conversao
+spec:
+  selector:
+    app: api-conversao
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30001
+  type: NodePort
